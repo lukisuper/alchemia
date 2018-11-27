@@ -83,6 +83,6 @@ HAVING sum(bramki) > (
 -- pytanie: czy zapisuj¹c to w ten sposób jak powy¿ej mogê nie nadawaæ ¿adnych aliasów na tabele?
 
 
-
+   
 
 
