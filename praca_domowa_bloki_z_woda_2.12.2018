@@ -1,0 +1,20 @@
+-- wejœciowa tabela: bloki
+
+SELECT sum(przegrody)
+FROM (
+     SELECT prawy.i - lewy.i - 1 * ((
+                                   SELECT min(Ai)
+                                   FROM bloki
+                                   WHERE i in (lewy.i, prawy.i)
+                                   ) - (
+                                       SELECT max(Ai)
+                                       FROM bloki
+                                       WHERE i > lewy.i and i < prawy.i
+                                       )) as przegrody
+     FROM bloki as lewy CROSS JOIN bloki as prawy
+     WHERE lewy.i < prawy.i and not exist (
+                                          SELECT *
+                                          FROM bloki
+                                          WHERE i > lewy.i and i < prawy.i and (Ai >= lewy.Ai or Ai >= prawy.Ai)
+                                          )
+     ) as foo
