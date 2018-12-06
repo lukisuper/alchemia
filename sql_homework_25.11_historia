@@ -1,0 +1,26 @@
+-- hary
+SELECT id_zawodnika, (
+                     SELECT count(*)
+                     FROM mecze JOIN mecze_zawodnicy ON mecze.id = mecze_zawodnicy.id_meczu JOIN zawodnicy as zawodnicy.id = mecze_zawodnicy.id_zawodnika as esmeralda
+                     WHERE jessica.id_zawodnika = esmeralda.id_zawodnika and jessica.data >= esmeralda.data
+                     ) as kolejka,
+                     (
+                     SELECT sum(bramki)
+                     FROM mecze JOIN mecze_zawodnicy ON mecze.id = mecze_zawodnicy.id_meczu JOIN zawodnicy as zawodnicy.id = mecze_zawodnicy.id_zawodnika as kimberly
+                     WHERE jessica.id_zawodnika = kimberly.id_zawodnika and jessica.data >= kimberly.data
+                     ) as kumulata
+FROM mecze JOIN mecze_zawodnicy ON mecze.id = mecze_zawodnicy.id_meczu JOIN zawodnicy as zawodnicy.id = mecze_zawodnicy.id_zawodnika as jessica
+
+-- pieprz(N)
+SELECT kolejka, id_zawodnika, kumulata
+FROM hary as a
+WHERE N = (
+          SELECT count(*)
+          FROM hary as b
+          WHERE a.kolejka = b.kolejka and (a.kumulata < b.kumulata or (a.kumulata = b.kumulata and a.id_zawodnika >= b.id_zawodnika))
+          )
+
+-- rozwi¹zanie
+SELECT pieprz1.kolejka, pieprz1.id_zawodnika, pieprz1.kumulata, pieprz2.id_zawodnika, pieprz2.kumulata, pieprz3.id_zawodnika, pieprz3.kumulata
+FROM pieprz(1) as pieprz1 JOIN pieprz(2) as pieprz2 ON pieprz1.kolejka = pieprz2.kolejka JOIN pieprz(3) as pieprz3 ON pieprz2.kolejka = pieprz3.kolejka
+ORDER BY kolejka asc
